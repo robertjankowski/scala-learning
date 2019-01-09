@@ -4,7 +4,7 @@
 		module="scala-tutorial$sources"
 		revision="0.1"
 		status="integration"
-		publication="20190106192443"
+		publication="20190109204205"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
