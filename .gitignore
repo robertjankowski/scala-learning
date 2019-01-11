@@ -41,48 +41,12 @@ https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
-# JIRA plugin
-atlassian-ide-plugin.xml
-
-# Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
-
-#### gradle ####
-
-.gradle
-/build/
-
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually 
-ignored)
-!gradle-wrapper.jar
-
-# Cache of project
-.gradletasknamecache
-
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
 
 #### java ####
 
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see 
-http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
 
 #### scala ####
 
@@ -109,3 +73,8 @@ project/plugins/project/
 .ensime
 
 project/
+.classpath
+.project
+.settings/
+target/
+/target/**
