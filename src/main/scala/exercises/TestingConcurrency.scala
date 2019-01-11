@@ -6,7 +6,7 @@ import scala.io.StdIn
 // TODO:   https://doc.akka.io/docs/akka/current/guide/tutorial_1.html
 // TODO: https://medium.com/@jstnlef/a-journey-into-concurrent-programming-in-scala-c1c3e7df0c4f
 //  => interesting tutorial !
-object PrintMyActorRefActor extends Actor {
+/*object PrintMyActorRefActor extends Actor {
   def props: Props = Props(new PrintMyActorRefActor)
 }
 
@@ -28,3 +28,4 @@ object TestingConcurrency extends App {
   try StdIn.readLine()
   finally system.terminate()
 }
+ */

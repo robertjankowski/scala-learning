@@ -4,7 +4,7 @@
 		module="scala-tutorial_2.12"
 		revision="0.1"
 		status="integration"
-		publication="20190109214118"
+		publication="20190111215140"
 	>
 		<description>
 		scala-tutorial
@@ -36,5 +36,6 @@
 		<dependency org="ch.qos.logback" name="logback-classic" rev="1.2.3" conf="compile->default(compile)"/>
 		<dependency org="com.typesafe.akka" name="akka-actor_2.12" rev="2.5.19" conf="compile->default(compile)"/>
 		<dependency org="com.typesafe.akka" name="akka-stream_2.12" rev="2.5.19" conf="compile->default(compile)"/>
+		<dependency org="org.scalatest" name="scalatest_2.12" rev="3.0.5" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>
