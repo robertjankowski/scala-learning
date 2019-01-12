@@ -14,7 +14,7 @@ class DonutCostCalculator {
 
   def ***() = "Testing !"
 
-  def ++(cost: Int) = {
+  def ++(cost: Int): Int = {
     totalCost + cost
   }
 }
