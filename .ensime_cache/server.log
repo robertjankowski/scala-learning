@@ -467,3 +467,4 @@
 23:19:27.828 DEBUG akka://ENSIME/user/ensime-main/$b/58 o.e.s.RequestHandler - received handled message VoidResponse from Actor[akka://ENSIME/user/ensime-main/project/scalac/$y#-2068110435] in state receive
 23:19:27.927 DEBUG akka://ENSIME/user/ensime-main/project/scalac/scala-learning_compile o.e.c.Analyzer - received handled message FullTypeCheckCompleteEvent from Actor[akka://ENSIME/deadLetters] in state ready
 23:19:27.928 DEBUG akka://ENSIME/user/ensime-main/$b o.e.s.ConnectionHandler - received handled message FullTypeCheckCompleteEvent from Actor[akka://ENSIME/user/ensime-main/project/scalac/scala-learning_compile#-1488622741]
+23:22:11.047 DEBUG akka://ENSIME/user/ensime-main/project/scalac/$a o.e.c.Analyzer - received handled message SuspendAnalyzer from Actor[akka://ENSIME/user/ensime-main/project/scalac/$a#-813019341] in state ready
