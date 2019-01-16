@@ -1,8 +1,7 @@
 package com.tutorial.chapter3
 
-import com.sun.xml.internal.ws.streaming.PrefixFactory
-
 object ImplicitFunctions extends App {
+
   object DonutConverstions {
     implicit def stringToDonut(s: String) = new DonutString(s)
   }
