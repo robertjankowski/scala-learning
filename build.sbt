@@ -2,6 +2,8 @@ name := "scala-tutorial"
 
 version := "0.1"
 
+val sparkVersion = "2.4.0"
+
 scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(

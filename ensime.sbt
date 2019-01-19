@@ -1,1 +1,1 @@
-ensimeIgnoreScalaMismatch in ThisBuild := true
+//ensimeIgnoreScalaMismatch in ThisBuild := true
