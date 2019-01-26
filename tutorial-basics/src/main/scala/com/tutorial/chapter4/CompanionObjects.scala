@@ -1,6 +1,5 @@
 package com.tutorial.chapter4
 
-import FirstClass.Donut
 import scala.util.Random
 import scala.math.ceil
 
@@ -22,8 +21,6 @@ object CompanionObjects extends App {
       new Donut(newName, newProductCode)
     }
   }
-
   val myDonut = Donut("My Donut", 10334L)
-  myDonut.print
 
 }
