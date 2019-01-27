@@ -1,6 +1,8 @@
 package com.spark.tutorial
 
+import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
+
 import scala.math.sqrt
 
 object RDDBasics extends App {
@@ -69,5 +71,12 @@ object RDDBasics extends App {
   // reduce = sum
   val sumNums = rddNums.reduce(_ + _)
   println(s"Sum of 1-100 = ${sumNums}")
+
+  // Buffering
+  val buffResult = rddNums.map(x => x * x)
+  buffResult.persist(StorageLevel.DISK_ONLY)
+  println("Buffering test:")
+  println(buffResult.count())
+  println(buffResult.collect().mkString(","))
 
 }

@@ -1,7 +1,6 @@
 package com.spark.tutorial
 
-import org.apache.spark.SparkContext._
-import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.{SparkConf, SparkContext}
 
 object WordCount extends App {
 
