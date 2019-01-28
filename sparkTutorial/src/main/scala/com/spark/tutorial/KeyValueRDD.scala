@@ -1,5 +1,6 @@
 package com.spark.tutorial
 
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
 object KeyValueRDD extends App {
@@ -47,4 +48,52 @@ object KeyValueRDD extends App {
 
   // cogroup
   rdd.cogroup(other).foreach { println }
+
+  /*
+  Aggregate key-value
+  - reduceByKey
+  - foldByKey
+  - mapValues
+   */
+  val aRDD = sc.parallelize(
+    List(("panda", 2), ("pirate", 3), ("panda", 4), ("pirate", 2)))
+  // average by key
+  aRDD
+    .mapValues(x => (x, 1))
+    .reduceByKey((x, y) => (x._1 + y._1, x._2 + y._2)) // ("name", (sum[int], count[int]))
+    .mapValues(x => x._1 / x._2.toDouble) // ("name", average)
+    .foreach { println }
+
+  // parallel level
+  val testData = Seq(("a", 1), ("b", 23), ("a", 2), ("c", 10))
+  val testRDD = sc.parallelize(testData)
+  testRDD.reduceByKey((x, y) => x + y, 10).foreach { println }
+
+  // Grouping data
+  val g1 = testRDD.groupByKey(3).collect()
+  val g2 = testRDD.groupBy(_._1).map(x => (x._1, x._2.map(y => y._2))).collect() // maybe it's another way
+
+  // Joining
+  case class Store(name: String)
+  val storeAddress = Seq(
+    (Store("One"), "1 street"),
+    (Store("Two"), "2 street"),
+    (Store("One"), "3 street")
+  )
+  val storeRating = Seq(
+    (Store("One"), 23.4),
+    (Store("Two"), 23)
+  )
+  // join (also leftOuterJoin, rightOuterJoin)
+  sc.parallelize(storeAddress).join(sc.parallelize(storeRating)).foreach {
+    println
+  }
+
+  // sorting
+  val nums = sc.parallelize(1 to 100)
+  implicit val sortIntByString = new Ordering[Int] {
+    override def compare(x: Int, y: Int): Int = x.toString.compareTo(y.toString)
+  }
+  nums.sortBy(x => x).foreach { println }
+
 }
