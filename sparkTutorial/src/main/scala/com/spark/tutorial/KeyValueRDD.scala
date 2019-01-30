@@ -96,4 +96,11 @@ object KeyValueRDD extends App {
   }
   nums.sortBy(x => x).foreach { println }
 
+  // partitioner
+  val pairs = sc.parallelize(List((1, 1), (2, 2), (3, 3)))
+  import org.apache.spark.HashPartitioner
+  println(pairs.partitioner) // None
+  val partitioned = pairs.partitionBy(new HashPartitioner(2))
+  println(partitioned.partitioner)
+
 }

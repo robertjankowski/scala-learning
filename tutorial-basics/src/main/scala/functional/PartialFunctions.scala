@@ -1,4 +1,4 @@
-package exercises
+package functional
 
 object PartialFunctions extends App {
 
