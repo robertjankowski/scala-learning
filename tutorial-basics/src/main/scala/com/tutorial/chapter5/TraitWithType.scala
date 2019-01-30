@@ -19,7 +19,7 @@ object TrainWithType extends App {
 
   // this example is useless...
   type Book = String
-  val myBook = new MyBook[String]
+  val myBook = new MyBook[Book]
   val name: Book = "1 2 3"
   println(myBook.author(name))
   println(myBook.year(name))
