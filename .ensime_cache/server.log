@@ -1,0 +1,12 @@
+Exception in thread "main" java.nio.file.NoSuchFileException: /home/robjan/Pulpit/scala-learning/.ensime
+	at sun.nio.fs.UnixException.translateToIOException(UnixException.java:86)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:102)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:107)
+	at sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:214)
+	at java.nio.file.Files.newByteChannel(Files.java:361)
+	at java.nio.file.Files.newByteChannel(Files.java:407)
+	at java.nio.file.Files.readAllBytes(Files.java:3152)
+	at org.ensime.util.path.package$RichPath$.readBytes$extension(path.scala:40)
+	at org.ensime.util.path.package$RichPath$.readString$extension(path.scala:41)
+	at org.ensime.server.Server$.main(Server.scala:173)
+	at org.ensime.server.Server.main(Server.scala)
