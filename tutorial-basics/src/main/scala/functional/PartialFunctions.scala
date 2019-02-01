@@ -11,5 +11,5 @@ object PartialFunctions extends App {
   }
 
   val a = g.isDefinedAt(List(1, 2, 3))
-
+  println(a)
 }
