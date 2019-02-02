@@ -1,4 +1,4 @@
-robpackage com.tutorial.chapter5
+package com.tutorial.chapter5
 
 trait DonutDatabase[A] {
 
