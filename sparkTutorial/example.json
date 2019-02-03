@@ -1,0 +1,30 @@
+{
+  "people":
+  [
+    {
+      "name": "Rob",
+      "age": 22,
+      "lovesPandas": true
+    },
+    {
+      "name": "Mike",
+      "age": 10,
+      "lovesPandas": true
+    },
+    {
+      "name": "Lucy",
+      "age": 19,
+      "lovesPandas": false
+    },
+    {
+      "name": "Jessica",
+      "age": 31,
+      "lovesPandas": true
+    },
+    {
+      "name": "Bobby",
+      "age": 25,
+      "lovesPandas": false
+    }
+  ]
+}
