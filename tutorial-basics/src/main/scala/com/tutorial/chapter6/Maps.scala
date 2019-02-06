@@ -8,14 +8,18 @@ object Maps extends App {
                  ("Mark", Math.PI),
                  ("Tom", Math.pow(Math.PI, Math.PI)))
 
-  map1.foreach { println }
+  map1.foreach {
+    println
+  }
 
   // add element, arrows only
   val map2 = map1 + ("Cedric" -> Math.PI / Math.E)
 
   val map3 = map1 ++ map2
   println("Map1 + Map2")
-  map3.foreach { println }
+  map3.foreach {
+    println
+  }
 
   // remove
   val map4 = map1 - ("Rob")

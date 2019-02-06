@@ -5,7 +5,7 @@ import scala.collection.immutable.ListMap
 object ListMaps extends App {
 
   val listMap = ListMap("Rob" -> 1997, "Bob" -> 2044, "Mark" -> 123)
-//  listMap.foreach { println }
+  //  listMap.foreach { println }
 
   val rob = listMap("Rob")
 
@@ -19,7 +19,9 @@ object ListMaps extends App {
 
   // remove elements
   val listMap4 = listMap3 -- Seq("Rob", "Bob")
-  listMap4.foreach { println }
+  listMap4.foreach {
+    println
+  }
 
   // empty ListMap
   type Currency = Double

@@ -17,12 +17,16 @@ object HashMaps extends App {
 
   // get difference between maps
   val diffs1 = (hashMap2.toSet.diff(hashMap1.toSet)).toMap
-  diffs1.foreach { println }
+  diffs1.foreach {
+    println
+  }
   println()
 
   // remove HashMap
   val hashMap3 = hashMap2 -- Seq("Tom", "Marry")
-  hashMap3.foreach { println(_) }
+  hashMap3.foreach {
+    println(_)
+  }
 
   // empty map
   val empty = HashMap.empty[String, Int]

@@ -11,5 +11,7 @@ object Seqs extends App {
   val empty = Seq.empty[Int]
 
   val fillSeq = Seq.fill(10)(2)
-  fillSeq.foreach { println }
+  fillSeq.foreach {
+    println
+  }
 }

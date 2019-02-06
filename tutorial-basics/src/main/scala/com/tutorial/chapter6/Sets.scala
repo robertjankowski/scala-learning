@@ -1,7 +1,7 @@
 package com.tutorial.chapter6
 
 import scala.collection.SortedSet
-import scala.collection.immutable.{HashSet, TreeSet}
+import scala.collection.immutable.{BitSet, HashSet, TreeSet}
 
 object Sets extends App {
 
@@ -19,7 +19,9 @@ object Sets extends App {
 
   // find diffs between sets
   val diffs = set3.diff(set2)
-  diffs.foreach { println }
+  diffs.foreach {
+    println
+  }
   val diffs2 = set3 &~ set1 // the same as above
   assert(diffs == diffs2)
 
@@ -44,10 +46,16 @@ object Sets extends App {
       x.length - y.length
     }
   }
+
   val treeSet = TreeSet("Yes", "No", "I don't know", "Maybe")(OwnOrdering)
   println(treeSet.mkString(" | "))
 
   // SORTED SET
   val sortedSet = SortedSet("I", "like", "Scala")
+
+  // BIT SET
+  val bitSet = BitSet(3, 2, 0)
+  val bitSet1 = bitSet + 12 + 12
+  println(bitSet1.mkString(", "))
 
 }

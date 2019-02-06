@@ -8,7 +8,9 @@ object TreeMaps extends App {
   val treeMap =
     TreeMap[String, Drink]("Rob" -> (10, "Tea"), "Bob" -> (20, "Coffee"))
 
-  treeMap.foreach { println }
+  treeMap.foreach {
+    println
+  }
 
   // access element
   println(s"Rob drink: ${treeMap("Rob")}")
@@ -25,6 +27,8 @@ object TreeMaps extends App {
   val treeDiffOrder =
     TreeMap[String, String]("c" -> "C", "b" -> "B", "f" -> "f")(
       AlphabetOrdering)
-  treeDiffOrder.foreach { println }
+  treeDiffOrder.foreach {
+    println
+  }
 
 }
