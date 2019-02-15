@@ -256,7 +256,115 @@ object FeatureTransformers extends App {
 
   // ----------------
   // MaxAbsScaler
-  // TODO:
-  //  val maxAbsScaler = new MaxAbsScaler()
+  val dataFrame3 = spark
+    .createDataFrame(
+      Seq(
+        (0, Vectors.dense(1.0, 0.1, -8.0)),
+        (1, Vectors.dense(2.0, 1.0, -4.0)),
+        (2, Vectors.dense(4.0, 10.0, 8.0))
+      ))
+    .toDF("id", "features")
+  val maxAbsScaler =
+    new MaxAbsScaler().setInputCol("features").setOutputCol("scaledFeatures")
+  val maxAbsScalerModel = maxAbsScaler.fit(dataFrame3)
+  val scaledData1 = maxAbsScalerModel.transform(dataFrame3)
+  scaledData1.select("features", "scaledFeatures").show(false)
+
+  // ----------------
+  // Bucketizer
+  val splits =
+    Array(Double.NegativeInfinity, -0.5, 0.0, 0.5, Double.PositiveInfinity)
+  val data4 = Array(-999, -0.5, -0.3, 0.0, 0.21, 9999)
+  val dataFrame4 =
+    spark.createDataFrame(data4.map(Tuple1.apply)).toDF("features")
+  val bucketizer = new Bucketizer()
+    .setInputCol("features")
+    .setOutputCol("bucketedFeatures")
+    .setSplits(splits)
+  val bucketedData = bucketizer.transform(dataFrame4)
+  bucketedData.show(false)
+
+  // ----------------
+  // ElementwiseProduct
+  val dataFrame5 = spark
+    .createDataFrame(
+      Seq(
+        ("a", Vectors.dense(1.0, 2.0, 3.0)),
+        ("b", Vectors.dense(4.0, 5.0, 6.0))
+      ))
+    .toDF("id", "vector")
+  val transformingVector = Vectors.dense(0.0, 1.0, 2.0)
+  val transformer = new ElementwiseProduct()
+    .setScalingVec(transformingVector)
+    .setInputCol("vector")
+    .setOutputCol("transformedVector")
+  transformer.transform(dataFrame5).show(false)
+
+  // ----------------
+  // SQLTransformer
+  val df6 = spark
+    .createDataFrame(
+      Seq(
+        (0, 1.0, 3.0),
+        (2, 2.0, 5.3)
+      )
+    )
+    .toDF("id", "v1", "v2")
+  val sqlTransformer = new SQLTransformer()
+    .setStatement(
+      "SELECT *, (v1 + v2) AS v3, (v1 * v2) AS v4 FROM __THIS__"
+    )
+  sqlTransformer.transform(df6).show(false)
+
+  // ----------------
+  // VectorAssembler
+  val dataset5 = spark
+    .createDataFrame(
+      Seq((0, 18, 1.0, Vectors.dense(0.0, 10.0, 0.5), 1.0))
+    )
+    .toDF("id", "hour", "mobile", "userFeatures", "clicked")
+  val assembler = new VectorAssembler()
+    .setInputCols(Array("hour", "mobile", "userFeatures"))
+    .setOutputCol("features")
+  val output = assembler.transform(dataset5)
+  output.select("features", "clicked").show(false)
+
+  // ----------------
+  // VectorAssembler
+  val sizeHint = new VectorSizeHint()
+    .setInputCol("userFeatures")
+    .setHandleInvalid("skip")
+    .setSize(3)
+  val datasetWithSize = sizeHint.transform(dataset5)
+  datasetWithSize.show(false)
+
+  // ----------------
+  // QuantileDiscretizer
+  val data2 = Array((0, 18.0), (1, 19.0), (2, 8.0), (3, 5.0), (4, 2.2))
+  val df7 = spark.createDataFrame(data2).toDF("id", "hour")
+  val discretizer = new QuantileDiscretizer()
+    .setInputCol("hour")
+    .setOutputCol("result")
+    .setNumBuckets(3)
+  val result2 = discretizer.fit(df7).transform(df7)
+  result2.show(false)
+
+  // ----------------
+  // Imputer - missing value mean or median
+  val df8 = spark
+    .createDataFrame(
+      Seq(
+        (1.0, Double.NaN),
+        (2.0, Double.NaN),
+        (Double.NaN, 3.0),
+        (4.0, 4.0),
+        (5.0, 5.0)
+      ))
+    .toDF("a", "b")
+  val imputer = new Imputer()
+    .setInputCols(Array("a", "b"))
+    .setOutputCols(Array("out_a", "out_b"))
+  val model1 = imputer.fit(df8)
+  model1.transform(df8).show(false)
 
 }
