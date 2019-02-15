@@ -1,6 +1,7 @@
 package com.tutorial.chapter7
 
-import scala.collection.mutable.{HashMap, Map, ListMap}
+import scala.collection.mutable
+import scala.collection.mutable.{HashMap, ListMap, Map}
 
 object MutableMaps extends App {
 
@@ -26,4 +27,12 @@ object MutableMaps extends App {
   val t = listMap1.foldLeft(0)(_ + _._2)
   println(s"sum of values $t")
 
+  // Linked Hash Map
+  val linkedHashMap =
+    mutable.LinkedHashMap("One" -> 1.0, "Two" -> 2.0, "Three" -> 3.0)
+  println(linkedHashMap("One"))
+  linkedHashMap += ("Four" -> 4.0)
+  linkedHashMap ++= linkedHashMap
+  linkedHashMap.foreach { println }
+  val empty = mutable.LinkedHashMap.empty[String, Stream[Int]]
 }
