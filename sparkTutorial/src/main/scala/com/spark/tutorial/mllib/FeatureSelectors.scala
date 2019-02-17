@@ -7,10 +7,11 @@ import org.apache.spark.ml.attribute.{
   AttributeGroup,
   NumericAttribute
 }
-import org.apache.spark.ml.feature.{ChiSqSelector, RFormula, VectorSlicer}
+import org.apache.spark.ml.feature._
 import org.apache.spark.ml.linalg.Vectors
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.functions.col
 
 object FeatureSelectors extends App {
   val spark = SparkSession
@@ -73,5 +74,87 @@ object FeatureSelectors extends App {
 
   // ----------------
   // Locality Sensitive Hashing
-  // TODO:
+  // Bucketed Random Projection For Euclidean Distance
+  val dfA = spark
+    .createDataFrame(
+      Seq(
+        (0, Vectors.dense(1.0, 1.0)),
+        (1, Vectors.dense(1.0, -1.0)),
+        (2, Vectors.dense(-1.0, -1.0)),
+        (3, Vectors.dense(-1.0, 1.0))
+      ))
+    .toDF("id", "features")
+
+  val dfB = spark
+    .createDataFrame(
+      Seq(
+        (4, Vectors.dense(1.0, 0.0)),
+        (5, Vectors.dense(-1.0, 0.0)),
+        (6, Vectors.dense(0.0, 1.0)),
+        (7, Vectors.dense(0.0, -1.0))
+      ))
+    .toDF("id", "features")
+  val key = Vectors.dense(1.0, 0.0)
+  val brp = new BucketedRandomProjectionLSH()
+    .setBucketLength(2.0)
+    .setNumHashTables(3)
+    .setInputCol("features")
+    .setOutputCol("hashes")
+  val model = brp.fit(dfA)
+  println(
+    "The hashes dataset where hashed values are stored in the column `hashes`:")
+  model.transform(dfA).show(false)
+  println(
+    "Approximately joining dfA and dfB on Euclidean Distance smaller than 1.5:")
+  model
+    .approxSimilarityJoin(dfA, dfB, 1.5, "EuclideanDistance")
+    .select(col("datasetA.id").alias("idA"),
+            col("datasetB.id").alias("idB"),
+            col("EuclideanDistance"))
+    .show(false)
+
+  println("Approximately searching dfA for 2 nearest neighbors of the key:")
+  model.approxNearestNeighbors(dfA, key, 2).show(false)
+
+  // MinHash for Jaccard Distance
+  val dfA1 = spark
+    .createDataFrame(
+      Seq(
+        (0, Vectors.sparse(6, Seq((0, 1.0), (1, 1.0), (2, 1.0)))),
+        (1, Vectors.sparse(6, Seq((2, 1.0), (3, 1.0), (4, 1.0)))),
+        (2, Vectors.sparse(6, Seq((0, 1.0), (2, 1.0), (4, 1.0))))
+      ))
+    .toDF("id", "features")
+
+  val dfB1 = spark
+    .createDataFrame(
+      Seq(
+        (3, Vectors.sparse(6, Seq((1, 1.0), (3, 1.0), (5, 1.0)))),
+        (4, Vectors.sparse(6, Seq((2, 1.0), (3, 1.0), (5, 1.0)))),
+        (5, Vectors.sparse(6, Seq((1, 1.0), (2, 1.0), (4, 1.0))))
+      ))
+    .toDF("id", "features")
+
+  val key1 = Vectors.sparse(6, Seq((1, 1.0), (3, 1.0)))
+  val mh = new MinHashLSH()
+    .setNumHashTables(5)
+    .setInputCol("features")
+    .setOutputCol("hashes")
+  val model1 = mh.fit(dfA1)
+  println(
+    "The hashes dataset where hashed values are stored in the column `hashes`:")
+  model1.transform(dfA1).show(false)
+
+  println(
+    "Approximately joining dfA and dfB on Euclidean Distance smaller than 0.6:")
+  model1
+    .approxSimilarityJoin(dfA1, dfB1, 0.6, "JaccardDistance")
+    .select(col("datasetA.id").alias("idA"),
+            col("datasetB.id").alias("idB"),
+            col("JaccardDistance"))
+    .show(false)
+
+  println("Approximately searching dfA for 2 nearest neighbors of the key:")
+  model1.approxNearestNeighbors(dfA1, key1, 2).show(false)
+
 }
