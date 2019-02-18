@@ -38,6 +38,10 @@ object SparkSQL extends App {
 
   val donutSQL = sqlContext.createDataFrame(donutRDD)
   donutSQL.createOrReplaceTempView("donut")
-  donutSQL.show(false)
+
+  val upper: String => String = e => e.toUpperCase
+  import org.apache.spark.sql.functions.{udf, col}
+  val upperUDF = udf(upper)
+  donutSQL.withColumn("upper", upperUDF(col("name"))).show(false)
 
 }
