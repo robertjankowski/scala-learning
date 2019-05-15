@@ -2,8 +2,10 @@ package tourOfScala
 
 class Stack[A] {
   private var elements = List.empty[A]
+
   def push(x: A) = elements = x :: elements
   def peek: A = elements.head
+
   def pop(): A = {
     val currentTop = peek
     elements = elements.tail
@@ -14,12 +16,17 @@ class Stack[A] {
 abstract class Fruit {
   override def toString: String = s"${this.getClass}"
 }
+
 class Apple extends Fruit
+
 class Peach extends Fruit
 
 object GenericClass extends App {
 
   val stack = new Stack[Long]
+
+  val stack1 = new Stack[Int]
+  stack1.push(10);
 
   for (i <- 0 until 10) {
     stack.push(i)
@@ -33,5 +40,4 @@ object GenericClass extends App {
   fruit.push(new Peach)
   println(fruit.pop)
   println(fruit.pop)
-
 }
