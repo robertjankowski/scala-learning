@@ -32,4 +32,8 @@ object ImplicitExamples extends App {
   implicit def stringToInt(x: String) = x.length
   testConversion(List("rob", "jan", "test")) // not working...
 
+  def t[A <: Int](xs: List[A])(f: A => Boolean) = xs.filter(f)
+  val res = t(List(2, 3, 44))(x => x % 2 == 0).mkString(", ")
+  println(res)
+
 }
