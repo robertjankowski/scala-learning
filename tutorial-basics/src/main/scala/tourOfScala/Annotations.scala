@@ -36,6 +36,6 @@ object Annotations extends App {
   printName(first = "Rob", last = "Jan")
 
   // package objects
-  showFruit(fruit)
+//  showFruit(fruit)
 
 }
