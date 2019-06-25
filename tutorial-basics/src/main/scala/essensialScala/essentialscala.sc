@@ -20,6 +20,8 @@ object Test {
     44
   }
 }
+import java.util.Date
+
 import Test._
 Test.sayHello
 Test.noParamsMethod
