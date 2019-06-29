@@ -77,3 +77,23 @@ def sum(x: Option[Int], y: Option[Int]): Option[Int] =
     } yield xx + yy
 
 sum(readInt("123"), readInt("44"))
+
+for {
+    (a, b) <- Seq(1, 2, 3).zip(Seq(4, 5, 6))
+} yield {
+    a + b
+}
+
+for {
+    x <- Seq(1, 2, 3).zipWithIndex
+} println(x)
+
+val example = Map("a" -> 1, "b" -> 2, "c" -> 3)
+example("a")
+example.get("aa")
+example + ("d" -> 35) - "b"
+example.flatMap {
+    case (str, num) =>
+        (1 to 3).map(x => (str + x) -> (num * x))
+}
+(10 until 1 by -1).toList
