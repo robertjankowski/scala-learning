@@ -41,7 +41,7 @@ object Person {
   }
 }
 
-object DateWriter extends HtmlWriter[Date] {
+object DateWriter1 extends HtmlWriter[Date] {
   def write(in: Date) = s"<span>${in.toString}</span>"
 }
 
@@ -50,7 +50,52 @@ object ObfuscatedPersonWriter extends HtmlWriter[Person] {
     s"<span>${person.name} (${person.email.replaceAll("@", " at ")})</span>"
 }
 
-DateWriter.write(new Date)
+implicit class HtmlOps[T](data: T) {
+  def toHtml(implicit writer: HtmlWriter[T]) =
+    writer.write(data)
+}
+
+DateWriter1.write(new Date)
 ObfuscatedPersonWriter.write(Person("John", "john@example.com"))
 
 HtmlWriter[Person].write(Person("Noel", "noel@example.org"))
+
+Person("John", "john@example.com").toHtml
+
+implicit class ExtraStringMethods(str: String) {
+  val vowels = Seq('a', 'e', 'i', 'o', 'u')
+
+  def numberOfVowels = str.toList.count(vowels contains _)
+}
+"the quick brown fox".numberOfVowels
+
+implicit class IntYeah(count: Int) {
+  def yeah() =
+    for {
+      _ <- 1 to count
+    } println("Oh yeah")
+
+}
+2.yeah()
+(-1).yeah()
+
+// Context bound syntax
+def pageTemplate[A: HtmlWriter](body: A): String = {
+  val renderedBody = body.toHtml
+
+  s"<html><head>...</head><body>$renderedBody</body></html>"
+}
+
+case class Example(name: String)
+implicit val ex: Example = Example("implicit")
+
+implicitly[Example] == ex
+
+class B {
+  def bar = "class B method"
+}
+class A
+
+implicit def aToB(in: A): B = new B()
+
+new A().bar
